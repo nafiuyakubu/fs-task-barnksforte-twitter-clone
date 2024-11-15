@@ -4,19 +4,13 @@
 
 Task Project Structure
 
-├── backend/ # Backend code (Node.js + Express + Sequelize Orn)
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── ....(other Dir/Files)
-│ └── server.js
-├── frontend/ # Frontend code (React + Redux + TypeScript)
-│ ├── src/
-│ ├── public/
-│ ├── ....(other Dir/Files)
-│ └── Dockerfile
-├── docker-compose.yml
-└── README.md
+### ├── backend/ # Backend code (Node.js + Express + Sequelize Orn)
+
+### ├── frontend/ # Frontend code (React + Redux + TypeScript)
+
+### ├── docker-compose.yml
+
+### └── README.md
 
 # Setup and Installation
 

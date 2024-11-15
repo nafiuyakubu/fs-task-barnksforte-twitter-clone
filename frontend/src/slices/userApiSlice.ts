@@ -7,27 +7,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: `${AUTH_URL}/login`, // Full URL is constructed here
+        url: `${AUTH_URL}/login`, // Full URL
         method: "POST",
         body: data,
       }),
     }),
     logout: builder.mutation({
       query: () => ({
-        url: `${AUTH_URL}/logout`, // Full URL
+        url: `${AUTH_URL}/logout`,
         method: "POST",
       }),
     }),
     register: builder.mutation({
       query: (data) => ({
-        url: `${AUTH_URL}/register`, // Full URL
+        url: `${AUTH_URL}/register`,
         method: "POST",
         body: data,
       }),
     }),
     updateUser: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/update-profile`, // Full URL
+        url: `${USERS_URL}/update-profile`,
         method: "PUT",
         body: data,
       }),

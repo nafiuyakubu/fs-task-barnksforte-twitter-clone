@@ -22,7 +22,7 @@ exports.updateProfile = [
     }
 
     try {
-      const user = await User.findByPk(req.user.id);
+      const user = await User.findByPk(req.body.id);
       if (!user) return res.status(404).json({ message: "User not found" });
 
       const validPassword = await bcrypt.compare(
