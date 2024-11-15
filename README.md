@@ -4,15 +4,15 @@
 
 ---
 
-Task Project Structure
+## Task Project Structure
 
-### ├── backend/ # Backend code (Node.js + Express + Sequelize ORM)
+- ├── backend/ # Backend code (Node.js + Express + Sequelize ORM)
 
-### ├── frontend/ # Frontend code (React + Redux + TypeScript)
+- ├── frontend/ # Frontend code (React + Redux + TypeScript)
 
-### ├── docker-compose.yml
+- ├── docker-compose.yml
 
-### └── README.md
+- └── README.md
 
 ---
 
@@ -20,8 +20,8 @@ Task Project Structure
 
 ## My Task Commands
 
-To Start Project/Task Services: docker-compose up
-To Stop Project/Task Services: docker-compose down
-To Rebuild Project/Task Containers: docker-compose up --build
+- To Start Project/Task Services: docker-compose up
+- To Stop Project/Task Services: docker-compose down
+- To Rebuild Project/Task Containers: docker-compose up --build
 
 <!-- To Run Project/Task Migrations: docker-compose exec backend npx sequelize-cli db:migrate -->
