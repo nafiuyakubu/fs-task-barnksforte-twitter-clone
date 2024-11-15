@@ -33,15 +33,19 @@ const LoginPage: React.FC = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      let payload = { username, password };
-      const res = await login(payload).unwrap();
-      // console.log(res);
-      toast.success("Login successful");
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    if (username === "" || password === "") {
+      toast.error("All Field are Required");
+    } else {
+      try {
+        let payload = { username, password };
+        const res = await login(payload).unwrap();
+        // console.log(res);
+        toast.success("Login successful");
+        dispatch(setCredentials({ ...res }));
+        navigate("/");
+      } catch (err: any) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
   };
 

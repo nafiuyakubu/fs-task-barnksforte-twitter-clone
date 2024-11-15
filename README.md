@@ -2,15 +2,19 @@
 
 ## Project/Task Submission by Nafiu
 
+---
+
 Task Project Structure
 
-### ├── backend/ # Backend code (Node.js + Express + Sequelize Orn)
+### ├── backend/ # Backend code (Node.js + Express + Sequelize ORM)
 
 ### ├── frontend/ # Frontend code (React + Redux + TypeScript)
 
 ### ├── docker-compose.yml
 
 ### └── README.md
+
+---
 
 # Setup and Installation
 

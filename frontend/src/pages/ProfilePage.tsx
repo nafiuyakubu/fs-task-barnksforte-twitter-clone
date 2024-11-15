@@ -36,15 +36,16 @@ const ProfilePage: React.FC = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password === "" || confirmPassword === "") {
+      toast.error("Password fields cannot be empty");
+    } else if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {
       try {
-        const res = await updateProfile({
-          id: userInfo?.id ?? "", // Handle case if userInfo is null
-          name,
-          password,
-        }).unwrap();
+        let id = userInfo?.id ?? ""; // Handle case if userInfo is null
+        let token = userInfo?.token;
+        let payload = { id, name, password, token };
+        const res = await updateProfile(payload).unwrap();
         dispatch(setCredentials(res));
         toast.success("Profile updated successfully");
       } catch (err: any) {
@@ -102,7 +103,7 @@ const ProfilePage: React.FC = () => {
           Update
         </Button>
 
-        {isLoading && <Loader />}
+        {isLoading && <Loader size={50} color="secondary" />}
       </Form>
     </FormContainer>
   );

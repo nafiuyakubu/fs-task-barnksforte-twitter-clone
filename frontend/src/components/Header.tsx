@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/userApiSlice";
 import { logout } from "../slices/authSlice";
+import twitter from "../assets/twitter-icon.png";
 
 interface RootState {
   auth: {
@@ -35,7 +36,9 @@ const Header: React.FC = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Twitter Clone</Navbar.Brand>
+            <Navbar.Brand>
+              <img style={{ height: "30px" }} src={twitter} alt="twitter" />
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

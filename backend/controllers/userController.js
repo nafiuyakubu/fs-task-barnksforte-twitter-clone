@@ -25,14 +25,14 @@ exports.updateProfile = [
       const user = await User.findByPk(req.body.id);
       if (!user) return res.status(404).json({ message: "User not found" });
 
-      const validPassword = await bcrypt.compare(
-        req.body.oldPassword,
-        user.password
-      );
-      if (!validPassword)
-        return res.status(400).json({ message: "Incorrect current password" });
+      // const validPassword = await bcrypt.compare(
+      //   req.body.oldPassword,
+      //   user.password
+      // );
+      // if (!validPassword)
+      //   return res.status(400).json({ message: "Incorrect current password" });
 
-      const newPassword = await bcrypt.hash(req.body.newPassword, 10);
+      const newPassword = await bcrypt.hash(req.body.password, 10);
       await user.update({
         name: req.body.name,
         password: newPassword,
@@ -49,6 +49,7 @@ exports.updateProfile = [
         email: user.email,
       });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ message: "Error updating profile", error });
     }
   },

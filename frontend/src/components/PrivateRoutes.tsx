@@ -4,6 +4,7 @@ import { RootState } from "../store"; // Adjust this import based on where your 
 
 const PrivateRoute: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
+  // console.log("User Information:", userInfo);
 
   return userInfo ? <Outlet /> : <Navigate to="/login" replace />;
 };

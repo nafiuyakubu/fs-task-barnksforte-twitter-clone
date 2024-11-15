@@ -37,7 +37,9 @@ const RegisterPage: React.FC = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password === "" || confirmPassword === "") {
+      toast.error("Password fields cannot be empty");
+    } else if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {
       try {

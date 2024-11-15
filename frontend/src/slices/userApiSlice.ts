@@ -30,6 +30,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/update-profile`,
         method: "PUT",
         body: data,
+        // Include authorization header if token is present
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
       }),
     }),
   }),

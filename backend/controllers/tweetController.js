@@ -19,9 +19,9 @@ exports.createTweet = async (req, res) => {
 exports.getTweets = async (req, res) => {
   try {
     // Get pagination parameters from query string with defaults
-    const page = parseInt(req.query.page) || 1; // Default to 1 if no page is provided
-    const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 tweets per page if no pageSize is provided
-    const offset = (page - 1) * pageSize; // Calculate the offset
+    // const page = parseInt(req.query.page) || 1; // Default to 1 if no page is provided
+    // const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 tweets per page if no pageSize is provided
+    // const offset = (page - 1) * pageSize; // Calculate the offset
 
     // // Fetch own tweets with pagination
     // const ownTweets = await Tweet.findAll({
