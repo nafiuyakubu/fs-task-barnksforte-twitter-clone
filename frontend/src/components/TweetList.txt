@@ -1,0 +1,50 @@
+// components/TweetList.tsx
+import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { ListGroup, Badge } from "react-bootstrap";
+
+interface Tweet {
+  id: number;
+  content: string;
+  tags: string[];
+}
+
+interface TweetListProps {
+  tweets: Tweet[];
+}
+
+const TweetList: React.FC<TweetListProps> = ({ tweets }) => {
+  const [visibleTweets, setVisibleTweets] = useState(tweets.slice(0, 10));
+
+  const fetchMoreTweets = () => {
+    const newTweets = tweets.slice(
+      visibleTweets.length,
+      visibleTweets.length + 10
+    );
+    setVisibleTweets([...visibleTweets, ...newTweets]);
+  };
+
+  return (
+    <InfiniteScroll
+      dataLength={visibleTweets.length}
+      next={fetchMoreTweets}
+      hasMore={visibleTweets.length < tweets.length}
+      loader={<h4>Loading...</h4>}
+    >
+      <ListGroup>
+        {visibleTweets.map((tweet) => (
+          <ListGroup.Item key={tweet.id}>
+            <div>{tweet.content}</div>
+            {tweet.tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="mr-1">
+                @{tag}
+              </Badge>
+            ))}
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </InfiniteScroll>
+  );
+};
+
+export default TweetList;

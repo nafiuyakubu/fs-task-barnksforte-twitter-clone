@@ -1,0 +1,26 @@
+npm install express sequelize mysql2 bcryptjs jsonwebtoken dotenv
+npm install --save-dev nodemon
+
+
+# User table migration
+npx sequelize-cli migration:generate --name create-user-table
+
+# Tweet table migration
+npx sequelize-cli migration:generate --name create-tweet-table
+
+# UserTweetShare table migration (for tweet sharing functionality)
+npx sequelize-cli migration:generate --name create-user-tweet-share-table
+
+
+
+Create the React App with TypeScript:
+npx create-react-app twitter-clone --template javascript
+
+Install Dependencies:
+npm install @reduxjs/toolkit react-redux axios react-router-dom tailwindcss
+
+
+Configure Tailwind CSS:
+npx tailwindcss init -p
+
+

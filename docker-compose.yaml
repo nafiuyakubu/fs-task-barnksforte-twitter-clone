@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        SOURCE_DIR: "./backend"
+    ports:
+      - "4000:4000"
+    extra_hosts:
+      - "localhost:host-gateway"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - devNet
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        SOURCE_DIR: "./frontend"
+    ports:
+      - "3000:3000" # Map port 80 in the container to port 3000 on the host
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - devNet
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: twitter_clone_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - devNet
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin-dev
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    networks:
+      - devNet
+
+volumes:
+  db_data:
+
+networks:
+  devNet:
