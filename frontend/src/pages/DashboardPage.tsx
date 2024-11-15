@@ -3,16 +3,10 @@ import apiProtected from "../api/axiosConfig";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import TweetInput from "../components/TweetInput";
-import TweetList from "../components/TweetList";
-import axios from "axios";
+import { Tweet } from "../types/Tweet";
+import TweetComponent from "../components/Tweet";
 import { toast } from "react-toastify";
 // import TweetList from "./components/TweetList";
-
-interface Tweet {
-  id: number;
-  content: string;
-  tags: string[];
-}
 
 interface RootState {
   auth: {
@@ -24,11 +18,11 @@ const DashboardPage: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const [tweets, setTweets] = useState<Tweet[]>([]);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchTweets(page);
-  }, [page]);
+    fetchTweets(1);
+  }, []);
 
   const fetchTweets = async (page: number) => {
     console.log("fetching tweets");
@@ -51,27 +45,10 @@ const DashboardPage: React.FC = () => {
       // console.log(response);
       setTweets([response.data, ...tweets]);
       toast.success("Tweet successful");
+      fetchTweets(1);
     } catch (error: any) {
       console.error("Error posting tweet:", error);
       toast.error(error?.data?.message || error.error);
-    }
-  };
-
-  const deleteTweet = async (tweetId: number) => {
-    try {
-      await apiProtected.delete(`/api/tweets/${tweetId}`);
-      setTweets(tweets.filter((tweet) => tweet.id !== tweetId));
-    } catch (error) {
-      console.error("Error deleting tweet:", error);
-    }
-  };
-
-  const shareTweet = async (tweetId: number, tags: string[]) => {
-    try {
-      await apiProtected.post(`/api/tweets/${tweetId}/share`, { tags });
-      alert("Tweet shared successfully!");
-    } catch (error) {
-      console.error("Error sharing tweet:", error);
     }
   };
 
@@ -81,13 +58,17 @@ const DashboardPage: React.FC = () => {
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
           <TweetInput postTweet={postTweet} />
-          <button onClick={() => fetchTweets(page)}>Reload</button>
-          <TweetList
-            tweets={tweets}
-            fetchMoreTweets={() => setPage(page + 1)}
-            deleteTweet={deleteTweet}
-            shareTweet={shareTweet}
-          />
+          {/* <button onClick={() => fetchTweets(page)}>Reload</button> */}
+          <Container>
+            <Row>
+              <Col>
+                <h1 className="mt-5">Tweet Feed</h1>
+                {tweets.map((tweet) => (
+                  <TweetComponent key={tweet.id} tweet={tweet} />
+                ))}
+              </Col>
+            </Row>
+          </Container>
         </Col>
       </Row>
     </Container>

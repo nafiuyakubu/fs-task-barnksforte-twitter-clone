@@ -34,29 +34,27 @@ exports.getTweets = async (req, res) => {
     const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 tweets per page if no pageSize is provided
     const offset = (page - 1) * pageSize; // Calculate the offset
 
-    // // Fetch own tweets with pagination
-    // const ownTweets = await Tweet.findAll({
-    //   where: { userId: req.user.id },
-    // });
-    // // Fetch shared tweets with pagination
-    // const sharedTweets = await Tweet.findAll({
-    //   include: {
-    //     model: User,
-    //     as: "sharedWith",
-    //     where: { id: req.user.id },
-    //   },
-    // });
-
     const ownTweets = await Tweet.findAll({ where: { userId: req.user.id } });
     const sharedTweets = await Tweet.findAll({
       include: {
         model: User,
         as: "sharedWith",
         where: { id: req.user.id },
+        attributes: ["name"],
       },
     });
+
+    const ownTweetsWithSource = ownTweets.map((tweet) => ({
+      ...tweet.toJSON(),
+      source: "own",
+    }));
+    const sharedTweetsWithSource = sharedTweets.map((tweet) => ({
+      ...tweet.toJSON(),
+      source: "shared",
+    }));
+
     // Combine both own and shared tweets
-    const combinedTweets = [...ownTweets, ...sharedTweets];
+    const combinedTweets = [...ownTweetsWithSource, ...sharedTweetsWithSource];
 
     // Calculate total count and pagination info
     const totalTweets = combinedTweets.length;

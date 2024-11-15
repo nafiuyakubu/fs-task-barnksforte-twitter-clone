@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models");
 const generateToken = require("../utils/generateToken.js");
+const Sequelize = require("sequelize");
 
 // Middleware for validation
 const validateRegistration = [
@@ -89,7 +90,12 @@ exports.login = [
 
     try {
       const user = await User.findOne({
-        where: { username: req.body.username },
+        where: {
+          [Sequelize.Op.or]: [
+            { username: req.body.username },
+            { email: req.body.username },
+          ],
+        },
       });
       if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
         return res.status(400).json({ message: "Invalid credentials" });

@@ -55,10 +55,10 @@ const LoginPage: React.FC = () => {
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="email">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Username or Email</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter username"
+            placeholder="Enter email/username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           ></Form.Control>

@@ -89,7 +89,7 @@ const TweetInput: React.FC<TweetInputProps> = ({ postTweet }) => {
         <Form.Control
           type="text"
           name="tag"
-          placeholder="Type here Tag users by username to share"
+          placeholder="Type here Tag users by username and click to share"
           value={tagInput}
           onChange={handleTagInputChange}
         />
@@ -112,7 +112,7 @@ const TweetInput: React.FC<TweetInputProps> = ({ postTweet }) => {
         <div>
           <Form.Label>Share with: </Form.Label>
           {tags.map((tag) => (
-            <Badge key={tag.id} bg="secondary">
+            <Badge key={tag.id} bg="primary">
               {tag.username}
             </Badge>
           ))}

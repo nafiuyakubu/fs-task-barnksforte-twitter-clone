@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                 <>
                   <NavDropdown title={userInfo.name} id="username">
                     <LinkContainer to="/profile">
-                      <NavDropdown.Item>Update Profile</NavDropdown.Item>
+                      <NavDropdown.Item>Update Password</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
