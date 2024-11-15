@@ -3,6 +3,7 @@ import apiProtected from "../api/axiosConfig";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import TweetInput from "../components/TweetInput";
+import TweetList from "../components/TweetList";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import TweetList from "./components/TweetList";
@@ -30,15 +31,17 @@ const DashboardPage: React.FC = () => {
   }, [page]);
 
   const fetchTweets = async (page: number) => {
+    console.log("fetching tweets");
     try {
-      const response = await apiProtected.get(`/api/tweets?page=${page}`);
-      setTweets((prevTweets) => [...prevTweets, ...response.data]);
+      const response = await apiProtected.get(`/v1/tweets?page=${page}`);
+      console.log(response);
+      setTweets((prevTweets) => [...prevTweets, ...response.data.tweets]);
     } catch (error) {
       console.error("Error fetching tweets:", error);
     }
   };
 
-  const postTweet = async (content: string, tags: string[]) => {
+  const postTweet = async (content: string, tags: any) => {
     try {
       const response = await apiProtected.post("/v1/tweets/create", {
         userID: userInfo?.id,
@@ -78,12 +81,13 @@ const DashboardPage: React.FC = () => {
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
           <TweetInput postTweet={postTweet} />
-          {/* <TweetList
+          <button onClick={() => fetchTweets(page)}>Reload</button>
+          <TweetList
             tweets={tweets}
             fetchMoreTweets={() => setPage(page + 1)}
             deleteTweet={deleteTweet}
             shareTweet={shareTweet}
-          /> */}
+          />
         </Col>
       </Row>
     </Container>

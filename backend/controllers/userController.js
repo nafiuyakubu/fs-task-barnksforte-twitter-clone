@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../models");
 const { body, validationResult } = require("express-validator");
 const generateToken = require("../utils/generateToken.js");
+const Sequelize = require("sequelize");
 
 // Middleware for validation
 const validateProfileUpdate = [
@@ -55,17 +56,21 @@ exports.updateProfile = [
   },
 ];
 
-exports.getUserProfile = async (req, res) => {
-  const user = await User.findById(req.user.id);
-
-  if (user) {
-    res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
+exports.userSuggestion = async (req, res) => {
+  const query = req.query.query?.toLowerCase() || "";
+  try {
+    // Find users where the username matches the query, returning only id and username
+    const users = await User.findAll({
+      where: {
+        username: {
+          [Sequelize.Op.like]: `%${query}%`, // Partial match on username
+        },
+      },
+      attributes: ["id", "username"], // Return only id and username
     });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching user suggestions:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
